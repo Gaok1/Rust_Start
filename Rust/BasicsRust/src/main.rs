@@ -1,29 +1,29 @@
-// ==== Strings ====
-
-fn get_string_size(s: &String) -> usize{
-    s.len()
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
 
-fn get_string_index(s: &String, index: usize) -> char{
-   let buf = s.chars().nth(index).unwrap();
-   return buf;
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn perimeter(&self) -> u32{ //(&) ->usa referencia para não pegar ownership
+        2 * (self.width + self.height)
+    }
+
 }
 
-fn main(){
-    let mut my_string:String = String::from("Hello,World!");
-    //String mutavel e dinamica
-    my_string  += "My name is top top";
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
 
-    let mut other_string = "Hello,World!";
-    //String imutavel e estatica
-    //other_string += 'a'; //erro pois a string é imutavel (slice de leitura)]
-
-    print!("{}\n", my_string); print!("{}\n", other_string);
-
-    print!("Tamanho da string: {}\n", get_string_size(&my_string));
-    print!("Caracter na posição 0: {}\n", get_string_index(&my_string, 0));
-    print!("Tamanho da String other_string: {}\n", other_string.len());
-    print!("Caracter na posição 10: {}\n", other_string.chars().nth(10).unwrap());
-
-
+    println!(
+        "The area of the rectangle is {} square pixels.\n
+         And its perimeter is {} pixels.",
+        rect1.area(), rect1.perimeter()
+    );
 }
