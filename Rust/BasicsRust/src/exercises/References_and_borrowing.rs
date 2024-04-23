@@ -43,7 +43,7 @@ fn main() {
     let r2: &String = &s;
     println!("{}, {},", r1, r2);
     let r3: &mut String = &mut s;
-
+    /* Dangling is when a reference is made to a value that goes out of scope before the reference does.*/
     //Dangling References
     let dangle_reference = dangle();
 
