@@ -37,6 +37,11 @@ fn main() {
       //borrowing de variaveis
   };
 
+  while tuples.0 < 10 {
+      println!("tuples.0: {}", tuples.0);
+      tuples.0 += 1;
+  }
+
   //usuario.set_name(String::from("Joao Bastos")); //Erro, usuario foi movido para user2[
   //valor name não implementa copy trate, então ocorrerá movimentação de ownership
   
