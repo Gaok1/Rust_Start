@@ -9,6 +9,5 @@ fn main() {
     scanner.read_line(&mut input).unwrap(); //le o \n também, então a String input tem um \n no final
     input.pop(); //remove o \n do final da string
     print!("Hello, {}!", input);
-   
-
+    
 }

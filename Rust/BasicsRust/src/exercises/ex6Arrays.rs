@@ -24,13 +24,11 @@ fn selection_sort(array: &mut [i32]){
             }
         }
     }
-    print_array(array);
-    
+    print_array(array);   
 }
 
 fn process_array(array: &[i32]){ //recebe referencia para array 
 //não pode ser mutavel e não possui propriedade de ownership
-
     for i in array{
         print!("{} ", i);
     }
@@ -51,11 +49,9 @@ fn get_ownership(mut array: [i32;10]){ //copia o array para a função / não é
 
 fn main() {
     //Arrays
-
-
     let mut array_inferido:[i32;10] = [1,4,2,3,7,5,6,9,10,8];
     let mut array_zerado: [i32; 10] = [0; 10]; //inicializa um array de 10 posições com 0
-    let array_imutavel: [i32; 5] = [1,2,3,4,5];
+    let array_imutavel: [i32; 5]  = [1,2,3,4,5];
 
     //slices são uma referência a uma seção de array,ou seja, um ponteiro para o primeiro elemento e um tamanho
     print_array(&array_imutavel);//borrowing do array imutavel

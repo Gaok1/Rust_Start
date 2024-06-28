@@ -9,7 +9,6 @@ fn main(){
         println!("value = {}", value);
     }else if let None = variable{
         println!("value = None");
-
     }
     /* Using if let means less typing, less indentation, and less boilerplate code */
     // utilizamos quando temos um alvo bem definido e que não queremos testar para todos os valores

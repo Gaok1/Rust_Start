@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::{fmt::{self, Debug}, ops::{Shl, Shr}};
 
 use rand::Rng;
 extern crate rand;
@@ -10,19 +10,69 @@ struct Circle {
     radius: f64
 }
 struct Square{
-    side: f64
+    side: f64 //double 
 }
+impl Square {
+    fn new(side: f64) -> Square {
+        Square{side}
+    }
+}
+impl PartialEq for Square {
+    fn eq(&self, other: &Self) -> bool {
+        self.side == other.side
+    }
+}
+
+impl PartialOrd for Square {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.side.partial_cmp(&other.side)
+    }
+}
+
+impl fmt::Display for Square{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Square with side: {:.1} and area: {:.2}", self.side, self.area())
+    }
+}
+
+impl Shl<i32> for Square{
+    type Output = Square;
+    ///Operator overload to sum value into the square side
+    /// 
+    ///# Example
+    /// 
+    /// square << 1  `is the same` square.side +=1
+    fn shl(self, parametro: i32) -> Square {
+        
+        return Square::new(self.side + parametro as f64);
+    }
+}
+
+impl Shr<i32> for Square{
+    type Output = Square;
+    ///Operator overload to subtract value into the square side
+    /// 
+    ///# Example
+    /// 
+    /// square >> 1  `is the same` square.side -=1
+    fn shr(self, rhs:i32) -> Square {
+        
+        return Square::new(self.side - rhs as f64);
+    }
+}
+
 struct Triangle{
    pub base: f64,
    pub height: f64 //pq não pode ser private? -> pq a função area() precisa acessar esses valores
 }
 pub trait Geomtry {
     fn area(&self) -> f64;
-    fn printForm(&self) -> String {
+    
+    fn print_form(&self) -> String {
         String::from("Forma Geométrica desconhecida ou não implementada")
     }
-    fn Volume(&self, height: f64) -> f64 {
-        0.0
+    fn volume(&self, height: f64) -> f64 {
+        height*0.0
     }
 }
 
@@ -30,10 +80,10 @@ impl Geomtry for Circle {
     fn area(&self) -> f64 {
         std::f64::consts::PI * self.radius * self.radius
     }
-    fn printForm(&self) -> String {
+    fn print_form(&self) -> String {
         String::from("Círculo")
     }
-    fn Volume(&self, height: f64) -> f64 {
+    fn volume(&self, height: f64) -> f64 {
         self.area() * height
     }
 }
@@ -42,7 +92,7 @@ impl Geomtry for Square {
     fn area(&self) -> f64 {
         self.side * self.side
     }
-    fn Volume(&self, height: f64) -> f64 {
+    fn volume(&self, height: f64) -> f64 {
         self.area() * height
     }
 }
@@ -51,17 +101,17 @@ impl Geomtry for Triangle {
     fn area(&self) -> f64 {
         0.5 * self.base * self.height
     }
-    fn printForm(&self) -> String {
+    fn print_form(&self) -> String {
         String::from("Triângulo")
     }
-    fn Volume(&self, height: f64) -> f64 {
+    fn volume(&self, height: f64) -> f64 {
         self.area() * height
     }
 }
 
 fn half_volume(g: &impl Geomtry, height : f64) -> f64 {
     if(height != 0.0){
-        return g.Volume(height) / 2.0 
+        return g.volume(height) / 2.0 
     }
     return 0.0
 }
@@ -72,7 +122,7 @@ fn half_area( g : &impl Geomtry) -> f64 {
 //same as above but with trait bounds
 pub fn half_volume_2<T: Geomtry>(form : &T, height : f64)-> f64 {
     if(height != 0.0){
-        return form.Volume(height) / 2.0
+        return form.volume(height) / 2.0
     }
     return 0.0
 }
@@ -91,27 +141,5 @@ where T: Geomtry + Debug  //t must implements Geomtry and Debug
 
 
 fn main(){
-    let c = Circle{radius: 5.0};
-    let s = Square{side: 5.0};
-    let t = Triangle{base: 5.0, height: 5.0};
-
-    println!("Area of Circle: {:.2}", c.area());
-    println!("Area of Square: {:.2}", s.area());
-    println!("Area of Triangle: {:.2}", t.area());
-
-    println!("Forma do círculo: {}", c.printForm());
-    println!("Forma do quadrado: {}", s.printForm());
-    println!("Forma do triângulo: {}", t.printForm());
-
-    println!("Volume of Circle: {:.2}", c.Volume(10.0));
-    println!("Volume of Square: {:.2}", s.Volume(10.0));
-    println!("Volume of Triangle: {:.2}", t.Volume(10.0));
-
-    println!("Half Volume of Circle: {:.2}", half_volume(&c,10.0));
-    println!("Half Volume of Square: {:.2}", half_volume(&s,10.0));
-    println!("Half Volume of Triangle: {:.2}", half_volume(&t,10.0));
-
-    diplay_half_area_2(&c);
-
     
 }
