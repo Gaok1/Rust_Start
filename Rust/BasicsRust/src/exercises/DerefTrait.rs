@@ -17,6 +17,7 @@ impl<T> std::ops::Deref for MyBox<T> {
 }
 
 impl MyBox<String> {
+// impl for String variant of MyBox
     fn as_str(&self) -> &str {
         &self.0
     }

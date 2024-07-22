@@ -30,12 +30,15 @@ impl<T: Display> Point<T> {
         format!("x: {}, y: {}", self.x, self.y)
     }
 }
+
 #[derive(Debug)]
 enum Shulambs<T, U> {
     //Shulambs is a generic enum that takes two types Ok and Err
     Ok(T),
     Err(U),
 }
+
+
 fn divide(x: i32, y: i32) -> Shulambs<i32, Error> {
     //Shulambs is a generic enum that takes two types i32 and Error
     use Shulambs::{Err, Ok}; //use Shulambs::{Ok,Err} is a way to bring the enum variants into scope
